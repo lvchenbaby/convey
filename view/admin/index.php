@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title>系统管理</title>
+    <meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../view/css/common.css">
 	<link rel="stylesheet" type="text/css" href="../view/js/easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../view/js/easyui/themes/icon.css">
@@ -28,23 +29,22 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">Remove User</a>
     </div>
     
-    <div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+    <div id="dlg" class="easyui-dialog" style="width:800px;height:380px;"
             closed="true" buttons="#dlg-buttons">
-        
-        <form id="fm" method="post" novalidate>
-        <div class="ftitle">基本信息</div>
-            <div class="fitem">
-                <label>选择题型:</label>
-                <select>
-                	<option>单选</option>
-                	<option>多选</option>
-                </select>
+        <form id="fm" method="post" novalidate style="padding:0;height:100%;">
+            <div class="easyui-layout" style="width:100%;height:100%;" data-options="fit:true">
+                <div data-options="region:'west',title:'基本配置',split:false,collapsible:false" style="width:50%;">
+                    <div class="fitem">
+                        <label>题目类型:</label>
+                        <select id="sel-type">
+                            <option value="1" selected="true">单选</option>
+                            <option value="2">多选</option>
+                            <option value="3">问答</option>
+                        </select>
+                    </div>
+                </div>
+                <div data-options="region:'east',title:'选项列表',split:false,collapsible:false" style="width:50%;"></div>
             </div>
-            <div class="fitem">
-                <label>自定义选项:</label>
-                <input type="checkbox" value="1">
-            </div>
-            <div class="ftitle">选项设置</div>
         </form>
     </div>
     <div id="dlg-buttons">
@@ -54,7 +54,7 @@
     <script type="text/javascript">
         var url;
         function newUser(){
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle','New User');
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle','创建调查题目');
             $('#fm').form('clear');
             url = 'save_user.php';
         }
@@ -105,6 +105,13 @@
                 });
             }
         }
+
+        $("#sel-type").combobox({
+            editable:false,
+            valueField:'value',
+            textField:'text',
+            width:"80px"
+        });
     </script>
     <style type="text/css">
         #fm{
