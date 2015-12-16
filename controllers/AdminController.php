@@ -19,12 +19,12 @@ class AdminController extends Controller
 
 	//special validate
 	public function specialValidate(){
-
+		
 	}
 
 	//basic validate
 	public function validate(){
-
+		
 	}
 
 	//创建调查
@@ -48,6 +48,7 @@ class AdminController extends Controller
 
 	//建立调查项
 	private function createConvey(&$obj,$filename){
+		$filename=str_replace("\\", "/", $filename);
 		$sql="insert into convey_list(title,configfile) values('".$obj->title."','".$filename."')";
 		return iQuery($sql);
 	}

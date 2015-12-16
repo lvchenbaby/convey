@@ -2,8 +2,45 @@
 class IndexController extends Controller
 {
 
-	public function makeJS(){
+	//生成前台的模型绑定代码
+	public function makeJS($data){
+		if(is_array($data->questions)){
+			foreach($data->questions as $q){
+				$str=$this->genQuestionJS($q);
+			}
+		}else{
+			foreach($data->questions as $p){
+				foreach($p as $q){
+					$str=$this->genQuestionJS($q);
+				}
+			}
+		}
+	}
 
+	public function genQuestionJS($q){
+		if($q->required){
+			if($q->type==1){
+				if($q->otherfields){
+
+				}else{
+
+				}
+			}elseif($q->type==2){
+				if($q->otherfields){
+
+				}else{
+					
+				}
+			}else{
+				if($q->otherfields){
+
+				}else{
+					
+				}
+			}
+		}else{
+
+		}
 	}
 
 	public function getConveyFile($id){
@@ -16,7 +53,7 @@ class IndexController extends Controller
 	public function actionIndex(){
 		$data=$this->getConveyFile(15);
 		$convey=json_decode($data);
-		$this->render($this->action,["convey"=>$convey]);
+		$this->render($this->action,["convey"=>$convey,"js"=>$this->makeJS($convey)]);
 	}
 
 }

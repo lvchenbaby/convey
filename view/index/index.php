@@ -40,10 +40,13 @@
     <td width="52" align="center">&nbsp;</td>
     <td height="35">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="radio-<?php echo $k; ?>"> <input type="radio" name="radio-<?php echo $k; ?>" id="radio-<?php echo $i; ?>" value="radio-<?php echo $i; ?>" />
+ <label for="radio-<?php echo $v->id; ?>"> <input type="radio" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
       <?php echo $item ?>
       </label>&nbsp;&nbsp;
     <?php endforeach ?>
+<?php if($v->otherfields): ?>
+  <input placeholder="其他" />
+<?php endif ?>
       </td>
   </tr>
 <?php endforeach ?>
@@ -66,6 +69,13 @@
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
+    <?php if($v->otherfields): ?>
+      <?php if($v->type<3): ?>
+  <input type="checkbox" name="chkbox" id="radio" value="radio" /><input placeholder="其他" />
+<?php else: ?>
+<textarea placehoder="您的回答"></textarea>
+<?php endif ?>
+<?php endif ?>
       </td>
   </tr>
 <?php endforeach ?>
@@ -89,6 +99,13 @@
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
+    <?php if($v->otherfields): ?>
+      <?php if($v->type<3): ?>
+  <input type="checkbox" name="chkbox" id="radio" value="radio" /><input placeholder="其他" />
+<?php else: ?>
+<textarea placehoder="您的回答"></textarea>
+<?php endif ?>
+<?php endif ?>
       </td>
   </tr>
 <?php endforeach ?>

@@ -43,6 +43,7 @@ function connectMysql($dbconf, $dbindex = 0){
 	$dbcon = mysqli_connect($dbconf[$dbindex]['host'], $dbconf[$dbindex]['username'], $dbconf[$dbindex]['password'], $dbconf[$dbindex]['db']);
 	if ($dbcon->connect_error) {
 		die("数据库连接错误");
+	}else{
+		return $dbcon;
 	}
-	return $dbcon;
 }
