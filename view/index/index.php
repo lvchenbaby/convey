@@ -2,7 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/view/index/styles/style.css" type="text/css" rel="stylesheet" />
+<link href="<?php echo $this->viewdir; ?>/styles/style.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo JS; ?>/survey.js"></script>
 <title>您的期盼，我们的行动</title>
 </head>
 
@@ -38,7 +40,7 @@
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
-    <td height="35">
+    <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
  <label for="radio-<?php echo $v->id; ?>"> <input type="radio" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
       <?php echo $item ?>
@@ -63,7 +65,7 @@
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
-    <td height="35">
+    <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
  <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
@@ -93,7 +95,7 @@
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
-    <td height="35">
+    <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
  <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
@@ -103,7 +105,7 @@
       <?php if($v->type<3): ?>
   <input type="checkbox" name="chkbox" id="radio" value="radio" /><input placeholder="其他" />
 <?php else: ?>
-<textarea placehoder="您的回答"></textarea>
+<textarea placeholder="您的回答"></textarea>
 <?php endif ?>
 <?php endif ?>
       </td>

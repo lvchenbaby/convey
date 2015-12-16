@@ -8,7 +8,7 @@ $(function(){
 	}
 
 	function callback(res){
-
+		
 	}
 
 	function show_error(){
@@ -24,6 +24,5 @@ $(function(){
 			show_error();
 		}
 	});
-
 
 });
