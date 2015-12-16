@@ -1,9 +1,6 @@
 <?php
-function iQuery($sql, $index_field = "", $return_all_errors = false, $dbindex = 0) {
-	$dbcon = mysqli_connect($dbconf[$dbindex]['host'], $dbconf[$dbindex]['username'], $dbconf[$dbindex]['password'], $dbconf[$dbindex]['dbname']);
-	if ($dbcon->connect_error) {
-		return false;
-	}
+function iQuery($sql, $index_field = "", $return_all_errors = false) {
+	global $dbcon;
 	if (!is_array($sql)) {
 		$res = $dbcon->query($sql);
 		if ($res) {
@@ -13,8 +10,10 @@ function iQuery($sql, $index_field = "", $return_all_errors = false, $dbindex = 
 					$arr[$item[$index_field]] = $item;
 				}
 			} else {
-				while ($item = $res->fetch_array()) {
-					array_push($arr, $item);
+				if(is_object($res)){
+					while ($item = $res->fetch_array()) {
+						array_push($arr, $item);
+					}
 				}
 			}
 

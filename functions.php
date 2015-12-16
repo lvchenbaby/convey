@@ -12,13 +12,37 @@ function getRoute(){
 }
 
 function loadController($route){
-	include_once ROOT."/"."controllers/".ucfirst($route['ctrl'])."Controller.php";
-	$ctrl=ucfirst($route['ctrl'])."Controller";
-	return new $ctrl($route);
+	$filename=ROOT."/"."controllers/".ucfirst($route['ctrl'])."Controller.php";
+	if(!file_exists($filename)){
+		die("页面不存在!");
+	}else{
+		include_once $filename;
+		$ctrl=ucfirst($route['ctrl'])."Controller";
+		return new $ctrl($route);
+	}
+
+	
 }
 
 function execAction($route){
 	$ctrl=loadController($route);
 	$act="action".ucfirst($route['act']);
-	$ctrl->$act();
+	if(method_exists($ctrl, $act)){
+		$ctrl->$act();
+	}else{
+		die("页面不存在!");
+	}
+	
+}
+
+function getRequestType(){
+	return $_SERVER['REQUEST_METHOD'];
+}
+
+function connectMysql($dbconf, $dbindex = 0){
+	$dbcon = mysqli_connect($dbconf[$dbindex]['host'], $dbconf[$dbindex]['username'], $dbconf[$dbindex]['password'], $dbconf[$dbindex]['db']);
+	if ($dbcon->connect_error) {
+		die("数据库连接错误");
+	}
+	return $dbcon;
 }

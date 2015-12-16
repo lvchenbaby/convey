@@ -3,10 +3,10 @@
 return array(
 	"dbconfig"=>array(
 		array(
-			'host'=>"",
-			'username'=>"",
-			'password'=>"",
-			"db"=>""
+			'host'=>"localhost",
+			'username'=>"root",
+			'password'=>"root",
+			"db"=>"convey"
 		)
 		
 	)

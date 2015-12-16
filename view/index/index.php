@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="/view/index/styles/style.css" type="text/css" rel="stylesheet" />
+<title>您的期盼，我们的行动</title>
+</head>
+
+<body>
+<div class="waper">
+
+<div class="top"></div>
+<div class="bt">
+<Div class="bt_font">
+	
+&nbsp;&nbsp;&nbsp;&nbsp;为深入贯彻落实中央和省委、市委党的群团工作会议精神，切实有效发挥好机关工会和妇女组织的桥梁和纽带作用，保持和增强市直机关群团组织和群团工作的政治性、先进性、群众性，市直机关工会与妇女工委面向所属基层工会和妇女组织以及广大工会会员设计了<strong>"您的期盼·我们的行动"</strong>调查问卷，旨在通过这种方式，充分了解基层工会、妇女组织和广大职工群众的所思所想所盼，查找梳理我们在密切联系和有效服务基层组织、职工群众方面存在的突出问题，研究提出整改思路和措施。希望您能在百忙之中抽出时间认真阅读并填写调查问卷。本调查问卷为无记名性质，您可以不用有任何的顾虑，遵从您的内心做出选择，因为，您的期盼，就是我们的行动。
+</Div>
+</div>
+<div class="main">
+<p class="main_bt">以下是单项选择</p>
+<table width="780" border="0" cellspacing="0" cellpadding="0">
+
+<?php
+  $questions=$params['convey']->questions;
+  $part1=$questions->part1;
+  $part2=$questions->part2;
+  $part3=$questions->part3;
+  $j=0;
+  $i=0;
+ ?>
+
+<?php
+  foreach($part1 as $k=>$v):
+ ?>
+  <tr>
+    <td width="52" align="center"><?php echo ++$i; ?>.</td>
+    <td width="828" height="35"><?php echo $v->title ?></td>
+  </tr>
+  <tr>
+    <td width="52" align="center">&nbsp;</td>
+    <td height="35">
+    <?php foreach($v->items as $idx=>$item): ?>
+ <label for="radio-<?php echo $k; ?>"> <input type="radio" name="radio-<?php echo $k; ?>" id="radio-<?php echo $i; ?>" value="radio-<?php echo $i; ?>" />
+      <?php echo $item ?>
+      </label>&nbsp;&nbsp;
+    <?php endforeach ?>
+      </td>
+  </tr>
+<?php endforeach ?>
+</table>
+
+<p class="main_bt">以下为多项选择（选择其他选项的需要将具体内容填写在后面的空格内）</p>
+<table width="780" border="0" cellspacing="0" cellpadding="0">
+  <?php
+  foreach($part2 as $v):
+ ?>
+  <tr>
+    <td width="52" align="center"><?php echo ++$i; ?>.</td>
+    <td width="828" height="35"><?php echo $v->title ?></td>
+  </tr>
+  <tr>
+    <td width="52" align="center">&nbsp;</td>
+    <td height="35">
+    <?php foreach($v->items as $idx=>$item): ?>
+ <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
+      <?php echo $item ?>
+      </label><br>
+    <?php endforeach ?>
+      </td>
+  </tr>
+<?php endforeach ?>
+</table>
+
+<p class="main_bt">以下内容为基层工会填写</p>
+
+<table width="780" border="0" cellspacing="0" cellpadding="0">
+  <?php
+  foreach($part3 as $v):
+ ?>
+  <tr>
+    <td width="52" align="center"><?php echo ++$j; ?>.</td>
+    <td width="828" height="35"><?php echo $v->title ?></td>
+  </tr>
+  <tr>
+    <td width="52" align="center">&nbsp;</td>
+    <td height="35">
+    <?php foreach($v->items as $idx=>$item): ?>
+ <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
+      <?php echo $item ?>
+      </label><br>
+    <?php endforeach ?>
+      </td>
+  </tr>
+<?php endforeach ?>
+  <tr>
+    
+  </tr>
+  <tr>
+   
+  </tr>
+  </table>
+  <div class="tijiao"><a href="#"><img src="/view/index/images/tijiao.jpg" /></a></div>
+
+</div>
+
+</div>
+
+</body>
+</html>
