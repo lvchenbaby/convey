@@ -42,7 +42,7 @@
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="radio-<?php echo $v->id; ?>"> <input type="radio" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
+ <label for="radio-<?php echo $v->id; ?>"> <input type="radio" class="question-item" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
       <?php echo $item ?>
       </label>&nbsp;&nbsp;
     <?php endforeach ?>
@@ -67,13 +67,13 @@
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
+ <label for="chkbox"> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
       <?php if($v->type<3): ?>
-  <input type="checkbox" name="chkbox" id="radio" value="radio" /><input placeholder="其他" />
+  <input type="checkbox" name="chkbox" class="question-item" value="radio" /><input class="question-item-text" placeholder="其他" />
 <?php else: ?>
 <textarea placehoder="您的回答"></textarea>
 <?php endif ?>
@@ -97,15 +97,15 @@
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="chkbox"> <input type="checkbox" name="chkbox" id="radio" value="radio" />
+ <label for="chkbox"> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
       <?php if($v->type<3): ?>
-  <input type="checkbox" name="chkbox" id="radio" value="radio" /><input placeholder="其他" />
+  <input type="checkbox" name="chkbox"  class="question-item" value="radio" /><input  class="question-item-text" placeholder="其他" />
 <?php else: ?>
-<textarea placeholder="您的回答"></textarea>
+<textarea  class="question-item-text" placeholder="您的回答"></textarea>
 <?php endif ?>
 <?php endif ?>
       </td>

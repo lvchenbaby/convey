@@ -1,4 +1,9 @@
 $(function(){
+
+	function getQuestions(){
+		
+	}
+
 	function validate(){
 
 	}
