@@ -36,13 +36,14 @@
  ?>
   <tr>
     <td width="52" align="center"><?php echo ++$i; ?>.</td>
-    <td width="828" height="35"><?php echo $v->title ?></td>
+    <td width="828" class="question-title" height="35"><?php echo $v->title ?></td>
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="radio-<?php echo $v->id; ?>"> <input type="radio" class="question-item" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
+ <label> 
+ <input type="radio" class="question-item" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
       <?php echo $item ?>
       </label>&nbsp;&nbsp;
     <?php endforeach ?>
@@ -61,21 +62,21 @@
  ?>
   <tr>
     <td width="52" align="center"><?php echo ++$i; ?>.</td>
-    <td width="828" height="35"><?php echo $v->title ?></td>
+    <td class="question-title" width="828" height="35"><?php echo $v->title ?></td>
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="chkbox"> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
+ <label> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
       <?php if($v->type<3): ?>
-  <input type="checkbox" name="chkbox" class="question-item" value="radio" /><input class="question-item-text" placeholder="其他" />
+  <input type="checkbox" name="chkbox" class="question-item item-other" value="radio" /><input class="question-item-text" placeholder="其他" />
 <?php else: ?>
-<textarea placehoder="您的回答"></textarea>
+<textarea class="question-item-text" placehoder="您的回答"></textarea>
 <?php endif ?>
 <?php endif ?>
       </td>
@@ -91,19 +92,19 @@
  ?>
   <tr>
     <td width="52" align="center"><?php echo ++$j; ?>.</td>
-    <td width="828" height="35"><?php echo $v->title ?></td>
+    <td class="question-title" width="828" height="35"><?php echo $v->title ?></td>
   </tr>
   <tr>
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label for="chkbox"> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
+ <label> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
       <?php echo $item ?>
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
       <?php if($v->type<3): ?>
-  <input type="checkbox" name="chkbox"  class="question-item" value="radio" /><input  class="question-item-text" placeholder="其他" />
+  <input type="checkbox" name="chkbox"  class="question-item item-other" value="radio" /><input  class="question-item-text" placeholder="其他" />
 <?php else: ?>
 <textarea  class="question-item-text" placeholder="您的回答"></textarea>
 <?php endif ?>
@@ -118,7 +119,7 @@
    
   </tr>
   </table>
-  <div class="tijiao"><a href="#"><img src="/view/index/images/tijiao.jpg" /></a></div>
+  <div class="tijiao"><a href="javascript:void(0)" id="submit-btn"><img src="/view/index/images/tijiao.jpg" /></a></div>
 
 </div>
 

@@ -47,3 +47,7 @@ function connectMysql($dbconf, $dbindex = 0){
 		return $dbcon;
 	}
 }
+
+function RS($msg,$url="",$res=true){
+	echo json_encode(['msg'=>$msg,'url'=>$url,'res'=>$res]);die;
+}
