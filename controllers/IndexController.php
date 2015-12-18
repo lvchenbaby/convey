@@ -1,6 +1,8 @@
 <?php
+session_start();
 class IndexController extends Controller
 {
+	const SURVEYID=16;
 
 	//生成前台的模型绑定代码
 	public function makeJS($data){
@@ -51,21 +53,35 @@ class IndexController extends Controller
 	}
 
 	public function actionIndex(){
-		$fl=$this->getConveyFile(16);
+
+		$fl=$this->getConveyFile(self::SURVEYID);
 		$data=json_decode($fl);
 		$this->render($this->action,["convey"=>$data,"js"=>$this->makeJS($data)]);
+	}
+
+	public function getQuestStas(){
+		$sql="select * from convey_questions where conveyid=".self::SURVEYID;
+		$res=iQuery($sql);
+		return $res['result'];
+	}
+
+	public function actionStats(){
+		$fl=$this->getConveyFile(self::SURVEYID);
+		$data=json_decode($fl);
+		$stats=$this->getQuestStas();
+		$this->render($this->action,["convey"=>$data,"stats"=>$stats,"js"=>$this->makeJS($data)]);
 	}
 
 	public function validateAnswer($question,&$answer){
 		if(isset($answer[$question->id])){
 			$ans=$answer[$question->id];
+			global $count_items;
 			$count_items=count($question->items);
-
 			if($question->otherfields){
 				$count_items+=1;
 			}
 
-			switch($question->type){
+			switch(intval($question->type)){
 				case 1:
 					if(!is_null($ans['idx'])){
 						$idx=intval($ans['idx']);
@@ -84,8 +100,11 @@ class IndexController extends Controller
 					if(!is_null($ans['idx']) 
 						&& is_array($ans['idx']) 
 						&& count($ans['idx'])>0){
+						// echo count(array_filter($ans['idx'],
+						// 	function($var){global $count_items;echo $count_items;$res=(intval($var)>=0 && (intval($var)<$count_items));return $res;})
+						// 	);
 						if(count(array_filter($ans['idx'],
-							function($var){return $var>=0 && $var<$count_items;})
+							function($var){global $count_items;return $var>=0 && $var<$count_items;})
 							)==count($ans['idx'])){
 							if(isset($ans['txtopt']) && $ans['txtopt'] && empty($ans['txt'])){
 								return false;
@@ -112,14 +131,38 @@ class IndexController extends Controller
 	}
 
 	public function saveAnswer($ans){
-		foreach($ans as $a){
-			$sql="";
+
+		$sql="insert into convey_answers (ip,createdon,convey_answer,convey_id) values('". $_SERVER['REMOTE_ADDR']."',".time().",'".serialize($ans)."',".self::SURVEYID.")";
+		iQuery($sql);
+		foreach($ans as $k=>$a){
+			$setstr="";
+			if(is_array($a['idx'])){
+				foreach($a['idx'] as $v){
+					$setstr.=" item".$v."=item".$v."+1, ";
+				}
+				$setstr.=" id=id ";
+			}else{
+				$setstr=" item".$a['idx']."=item".$a['idx']."+1 ";
+			}
+
+			$sql="update convey_questions set ".$setstr." where id=".$k;
 			iQuery($sql);
-		}	
+		}
 	}
 
 	public function authenticate(){
-
+		if(isset($_COOKIE['SJIELQPLMCUHUSEUWPHED'])){
+			if(getRequestType()=="GET"){
+				RS("已经提交过了，非常感谢您的参与","",false);
+			}else{
+				$cnt=file_get_contents("php://input");
+				if(!empty($cnt)){
+					RS("已经提交过了，非常感谢您的参与","",false);
+				}else{
+					
+				}
+			}
+		}
 	}
 
 	public function afterValidate(&$answer){
@@ -128,15 +171,17 @@ class IndexController extends Controller
 				unset($answer[$k]);
 			}
 		}
+
+		return $answer;
 	}
 
 	public function actionRcvAns(){
 		$this->authenticate();
 		if(getRequestType()=="POST"){
 			$ans=$_POST;
+			array_walk_recursive($ans, function(&$val){if($val=="false"){$val=false;}if($val=="true")$val=true;});
 			$fl=$this->getConveyFile(16);
 			$data=json_decode($fl);
-
 			if(is_array($data->questions)){
 				foreach($data->questions as $k=>$v){
 					if(!$this->validateAnswer($v,$ans)){
@@ -158,8 +203,10 @@ class IndexController extends Controller
 			}
 			
 			$ans_filtered=$this->afterValidate($ans);
-			var_dump($ans_filtered);die;
 			$this->saveAnswer($ans_filtered);
+
+			setcookie("SJIELQPLMCUHUSEUWPHED",md5(time().rand(1,999)),time()+3600*24*365);
+			RS("感谢您参与该调查，我们会认真审阅您提供的信息，并保证不泄漏您的任何隐私","",true);
 		}
 	}
 }

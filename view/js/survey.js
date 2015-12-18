@@ -13,7 +13,7 @@ $(function(){
 					case 1:
 						var checked_item=$(this).find(".question-item:checked");
 						if(checked_item.length>0){
-							var idx=checked_item.first().index(".question-item:checked");
+							var idx=$(this).find(".question-item").index(checked_item.first()[0]);
 							var str="";
 							if(checked_item.first().hasClass("item-other")){
 								str=$(this).find(".question-item-text");
@@ -45,7 +45,7 @@ $(function(){
 							var txtopt=false;
 
 							checked_item.each(function(i){
-								idx.push($(that).index(".question-item:checked"));
+								idx.push($(that).find(".question-item").index(this));
 								if($(this).hasClass("item-other")){
 									txtopt=true;
 									str=$(that).find(".question-item-text").val();

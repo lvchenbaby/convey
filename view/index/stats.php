@@ -24,12 +24,21 @@
 
 <?php
   $questions=$params['convey']->questions;
+  $stats=$params['stats'];
   $part1=$questions->part1;
   $part2=$questions->part2;
   $part3=$questions->part3;
   $j=0;
   $i=0;
 
+  function getQuestionById($id,$questions){
+    foreach($questions as $q){
+      if($q['id']==$id){
+        return $q;
+      }
+    }
+    return null;
+  }
  ?>
 
 <?php
@@ -45,7 +54,7 @@
     <?php foreach($v->items as $idx=>$item): ?>
  <label> 
  <input type="radio" class="question-item" name="radio-<?php echo $v->id; ?>" id="radioid-<?php echo $v->id; ?>"  />
-      <?php echo $item ?>
+      <?php echo $item ?>(<span style="color:red;"><?php $quest=getQuestionById($v->id,$stats);echo $quest["item".$idx]; ?></span>)
       </label>&nbsp;&nbsp;
     <?php endforeach ?>
 <?php if($v->otherfields): ?>
@@ -70,7 +79,7 @@
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
  <label> <input type="checkbox" class="question-item" name="chkbox" id="radio" value="radio" />
-      <?php echo $item ?>
+      <?php echo $item ?>(<span style="color:red;"><?php $quest=getQuestionById($v->id,$stats);echo $quest["item".$idx]; ?></span>)
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
@@ -99,13 +108,13 @@
     <td width="52" align="center">&nbsp;</td>
     <td height="35" data-id="<?php echo $v->id; ?>" class="items-wrapper" data-type="<?php echo $v->type ?>" data-required="<?php echo $v->required ?>" data-otherfield="<?php echo $v->otherfields ?>">
     <?php foreach($v->items as $idx=>$item): ?>
- <label>
- <?php if($v->type==1): ?>
-  <input type="radio" class="question-item" name="radio-<?php echo $v->id ?>" />
+ <label> 
+  <?php if($v->type==1): ?>
+  <input type="radio" class="question-item" name="radio-<?php $v->id ?>" />
 <?php else: ?>
   <input type="checkbox" class="question-item" name="chkbox" />
 <?php endif ?>
-      <?php echo $item ?>
+      <?php echo $item ?>(<span style="color:red;"><?php $quest=getQuestionById($v->id,$stats);echo $quest["item".$idx]; ?></span>)
       </label><br>
     <?php endforeach ?>
     <?php if($v->otherfields): ?>
@@ -125,7 +134,6 @@
    
   </tr>
   </table>
-  <div class="tijiao"><a href="javascript:void(0)" id="submit-btn"><img src="/view/index/images/tijiao.jpg" /></a></div>
 
 </div>
 

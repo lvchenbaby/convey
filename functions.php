@@ -49,5 +49,6 @@ function connectMysql($dbconf, $dbindex = 0){
 }
 
 function RS($msg,$url="",$res=true){
+	header('Content-type: application/json');
 	echo json_encode(['msg'=>$msg,'url'=>$url,'res'=>$res]);die;
 }
