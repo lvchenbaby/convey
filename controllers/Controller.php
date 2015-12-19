@@ -11,6 +11,6 @@ class Controller
 	}
 
 	public function render($tpl,$params=null){
-		include ROOT."/view/".$this->controller."/".$this->action.".php";
+		include ROOT."/view/".$this->controller."/".$tpl.".php";
 	}
 }

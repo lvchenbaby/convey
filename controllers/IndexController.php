@@ -2,7 +2,7 @@
 session_start();
 class IndexController extends Controller
 {
-	const SURVEYID=16;
+	const SURVEYID=26;
 
 	//生成前台的模型绑定代码
 	public function makeJS($data){
@@ -180,7 +180,7 @@ class IndexController extends Controller
 		if(getRequestType()=="POST"){
 			$ans=$_POST;
 			array_walk_recursive($ans, function(&$val){if($val=="false"){$val=false;}if($val=="true")$val=true;});
-			$fl=$this->getConveyFile(16);
+			$fl=$this->getConveyFile(self::SURVEYID);
 			$data=json_decode($fl);
 			if(is_array($data->questions)){
 				foreach($data->questions as $k=>$v){
@@ -208,5 +208,14 @@ class IndexController extends Controller
 			setcookie("SJIELQPLMCUHUSEUWPHED",md5(time().rand(1,999)),time()+3600*24*365);
 			RS("感谢您参与该调查，我们会认真审阅您提供的信息，并保证不泄漏您的任何隐私","",true);
 		}
+	}
+
+	public function actionSurveyItem(){
+		$fl=$this->getConveyFile(self::SURVEYID);
+		$data=json_decode($fl);
+		$id=$_GET['id'];
+		$sql="select * from convey_answers where id=".$id;
+		$res=iQuery($sql);
+		$this->render("show",['convey'=>$data,'data'=>$res['result'][0]]);
 	}
 }

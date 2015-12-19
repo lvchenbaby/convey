@@ -17,6 +17,21 @@ class AdminController extends Controller
 		}
 	}
 
+	//调查列表
+	public function actionListSurvey(){
+		if(isset($_GET['ajax']) && $_GET['ajax']==1){
+			$page=$_POST['page'];
+			$page_size=$_POST['rows'];
+			$start=($page-1)*$page_size;
+			$sql="select SQL_CALC_FOUND_ROWS id,ip,DATE_FORMAT(FROM_UNIXTIME(createdon),'%Y-%m-%d %H:%i:%s') as createdon from convey_answers limit ".$start.",".$page_size;
+			$res=iQuery($sql);
+			responseJSON(['total'=>$res['total_rows'],'rows'=>$res['result']]);
+
+		}else{
+			$this->render("list_survey");
+		}
+	}
+
 	//special validate
 	public function specialValidate(){
 		
@@ -50,6 +65,7 @@ class AdminController extends Controller
 	private function createConvey(&$obj,$filename){
 		$filename=str_replace("\\", "/", $filename);
 		$sql="insert into convey_list(title,configfile) values('".$obj->title."','".$filename."')";
+		iQuery($sql);
 		return iQuery($sql);
 	}
 
@@ -80,4 +96,38 @@ class AdminController extends Controller
 		}
 	}
 
+
+	public function actionCreateQuestion(){
+		$this->render("create_question");
+	}
+
+
+	public function actionSurveyList(){
+		$sql="select * from convey_list";
+		$res=iQuery($sql);
+		responseJSON($res['result']);
+	}
+
+
+	public function actionGetQuestions(){
+		$surveyid=$_GET['id'];
+		$page=$_POST['page'];
+		$page_size=$_POST['rows'];
+		$start=($page-1)*$page_size;
+		$sql="select SQL_CALC_FOUND_ROWS * from convey_questions where conveyid=".$surveyid." limit ".$start.",".$page_size;
+		$res=iQuery($sql);
+
+		foreach($res['result'] as &$v){
+			$v['items']=unserialize($v['items']);
+		}
+
+		responseJSON(['total'=>$res['total_rows'],'rows'=>$res['result']]);
+	}
+
+	public function actionDelete(){
+		$id=$_POST['id'];
+		$sql="delete from convey_answers where id=".$id;
+		iQuery($sql);
+		responseJSON(['success'=>true]);
+	}
 }

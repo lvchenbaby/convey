@@ -44,6 +44,7 @@ function connectMysql($dbconf, $dbindex = 0){
 	if ($dbcon->connect_error) {
 		die("数据库连接错误");
 	}else{
+		mysqli_query($dbcon,"set names utf8");
 		return $dbcon;
 	}
 }
@@ -51,4 +52,9 @@ function connectMysql($dbconf, $dbindex = 0){
 function RS($msg,$url="",$res=true){
 	header('Content-type: application/json');
 	echo json_encode(['msg'=>$msg,'url'=>$url,'res'=>$res]);die;
+}
+
+function responseJSON($obj){
+	header('Content-type: application/json');
+	echo json_encode($obj);
 }
