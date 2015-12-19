@@ -3,18 +3,9 @@
     <div class="easyui-layout" data-option="fit:true" style="height:100%" id="form-create-question">
         <div data-options="region:'north'" style="height:30%;border-left:0;border-right:0;border-top:0"></div>
         <div data-options="region:'center'" style="height:70%;border-left:0;border-right:0;border-bottom:0">
-            <table id="dg-question-items" class="easyui-datagrid" style="border:none;"
-            fitColumns="true" singleSelect="true" fit="true" border="false">
-                <thead>
-                    <tr>
-                        <th field="title" editor="{
-                            type:'textbox',
-                            options:{
-                                valueField:'productid',
-                            }
-                        }" width="100"><a href="javascript:void(0)" class="easyui-linkbutton c6" data-options="iconCls:'icon-add'">增加选项</a></th>
-                    </tr>
-                </thead>
+            <table id="dg-question-items" title="题目选项" class="easyui-datagrid" style="border:none;"
+            fitColumns="true" singleSelect="true" fit="true" border="false" tools="#tt2" onClickCell="onClickCell">
+                
             </table>
         </div>
     </div>
@@ -53,6 +44,12 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="showItem()">查看详细</a>
 </div>
 
+<div id="tt2">
+    <a href="javascript:void(0)" class="icon-add" onclick="javascript:addQuestionItem()"></a>&nbsp;&nbsp;
+    <a href="javascript:void(0)" class="icon-ok" onclick="javascript:accept()"></a>
+    <a href="javascript:void(0)" class="icon-remove" onclick="javascript:deleteQuestionItem()"></a>
+</div>
+
 <script>
     ajax_load_scripts(["http://www.jeasyui.com/easyui/datagrid-detailview.js"],function(){
         $.parser.parse("#toolbar");
@@ -61,19 +58,27 @@
         });
         $.parser.parse("#dlg-buttons");
         $.parser.parse("#dlg");
-        $('#dg-question-items').datagrid();
+        $('#dg-question-items').datagrid({
+            columns:[[
+                {field:'questionitem',width:80,editor:{
+                    type:"textbox",
+                    options:{
+                        required:true
+                    }
+                }},
+            ]],
+            onClickCell:onClickCell
+        });
         $('#dlg').dialog();
         $('#dg').datagrid({
             columns:[[
-                {field:'id',width:40,title:"ID"
-                },
+                {field:'id',width:40,title:"ID"},
                 {field:'type',width:40,title:"类型",
                     formatter: function(value,row,index){
                         return ["单选","多选","问答"][value-1];
                     }
                 },
-                {field:'title',width:100,title:"标题"
-                }
+                {field:'title',width:100,title:"标题"}
             ]],
             view: detailview,
             detailFormatter:function(index,row){
@@ -108,7 +113,6 @@
                 });
             }
         });
-
     });
 
     function destroyItem(){
@@ -142,8 +146,54 @@
         }
     }
 
-    //增加题目选项
-    function addQuestionItem(){
+    var editIndex = undefined;
+    function endEditing(){
+        if (editIndex == undefined){return true}
+        if ($('#dg-question-items').datagrid('validateRow', editIndex)){
+            var ed = $('#dg-question-items').datagrid('getEditor', {index:editIndex,field:'questionitem'});
+            $('#dg').datagrid('endEdit', editIndex);
+            $('#dg-question-items').datagrid('acceptChanges');
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function accept(){
+        if (endEditing()){
+            $('#dg-question-items').datagrid('acceptChanges');
+        }
+    }
+
+    function deleteQuestionItem(){
 
     }
+
+    function onClickCell(index, field){
+        if (editIndex != index){
+            if (endEditing()){
+                $('#dg-question-items').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                var ed = $('#dg-question-items').datagrid('getEditor', {index:index,field:field});
+                if (ed){
+                    ($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+                }
+                editIndex = index;
+            } else {
+                $('#dg-question-items').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+
+    //增加题目选项
+    function addQuestionItem(){
+        if(endEditing()){
+            $('#dg-question-items').datagrid('appendRow',{questionitem:""});
+            editIndex = $('#dg-question-items').datagrid('getRows').length-1;
+            $('#dg-question-items').datagrid('selectRow', editIndex)
+                .datagrid('beginEdit', editIndex);
+        }
+    }
+
 </script>
