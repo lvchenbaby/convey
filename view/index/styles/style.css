@@ -29,6 +29,13 @@ ul{list-style-type:none;}
 .main_bt{ font-size:20px; color:#e61e0f; padding:20px 80px; font-weight:bold;}
 table{ padding:10px 70px;}
 .tijiao{ width:217px; height:96px; margin:40px auto;}
+input.question-item-text{
+	border: none;
+    background: rgba(255,255,255,0);
+    border-bottom: 1px solid black;
+    margin-left: 5px;
+    outline: none;
+}
 
 
 

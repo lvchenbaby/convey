@@ -12,6 +12,9 @@ function load_scripts(scripts,cbk){
     var len=scripts.length;
     var count=len;
     var callback=function(){
+        $("#loadingbar").width("101%").delay(200).fadeOut(400, function () {
+            $(this).remove();
+        });
         $('.mask').hide();
         cbk();
     };
@@ -44,6 +47,13 @@ function load_scripts(scripts,cbk){
 }
 
 function loadPage(url){
+
+    if ($("#loadingbar").length === 0) {
+        $("body").append("<div id='loadingbar'></div>")
+        $("#loadingbar").addClass("waiting").append($("<dt/><dd/>"));
+        $("#loadingbar").width((90 + Math.random() * 10) + "%");
+    }
+
     $('.mask').show();
     $.get(url,function(res){
         $('#page-content-area').html("");

@@ -6,6 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="../view/css/common.css">
 	<link rel="stylesheet" type="text/css" href="../view/js/easyui/themes/default/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../view/js/easyui/themes/icon.css">
+  <link rel="stylesheet" type="text/css" href="../view/css/loadingbar.css">
 	<script type="text/javascript" src="../view/js/jquery.min.js"></script>
 	<script type="text/javascript" src="../view/js/easyui/jquery.easyui.min.js"></script>
   <script type="text/javascript" src="<?php echo JS; ?>/base.js"></script>
