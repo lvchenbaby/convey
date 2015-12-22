@@ -2,7 +2,7 @@
 session_start();
 class IndexController extends Controller
 {
-	const SURVEYID=26;
+	const SURVEYID=32;
 
 	//生成前台的模型绑定代码
 	public function makeJS($data){

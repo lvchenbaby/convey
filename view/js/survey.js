@@ -83,12 +83,32 @@ $(function(){
 				}
 
 				answers[id].elem=this;
+				answers[id].rule=$(this).attr("data-rule");
 			}catch(e){
 				alert("页面发生错误，请刷新后重试");				
 			}
 		});
 		return answers;
 	}
+
+
+	$(".question-item").click(function(){
+		if($(this).prop("checked")==true){
+			var rule=$(this).parents(".items-wrapper").attr("data-rule");
+			var count_chk=$(this).parents(".items-wrapper").find(".question-item:checked").length;
+			if(rule!=undefined){
+				if(parseInt(rule)<count_chk){
+					$(this).prop("checked",false);
+					if(event.preventDefault && event.stopPropagation){
+						event.stopPropagation();
+						event.preventDefault();
+					}else{
+						return false;
+					}
+				}
+			}
+		}
+	});
 
 	function validate(answers){
 		var errs=[];
@@ -100,7 +120,13 @@ $(function(){
 					if(answers[x].txtopt && (answers[x].txt=="" || !answers[x].txt)){
 						errs.push([answers[x].elem,2]);
 					}
+					if(answers[x].rule){
+						if(parseInt(answers[x].rule)!=answers[x].idx.length){
+							errs.push([answers[x].elem],3);
+						}
+					}
 				}
+
 			}
 		}
 		return errs;
@@ -146,9 +172,11 @@ $(function(){
 	var post_url="?ctrl=index&act=RcvAns";
 
 	$('#submit-btn').click(function(){
+		$('.icon-submit-btn').attr("src","/view/index/images/tijiao1.png");
 		var ans=getAnswers();
 		var errs=validate(ans);
 		if(errs.length>0){
+			$('.icon-submit-btn').attr("src","/view/index/images/tijiao.jpg");
 			show_error(errs);
 		}else{
 			removeDomElemFromObj(ans,"elem");

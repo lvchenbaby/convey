@@ -65,7 +65,6 @@ class AdminController extends Controller
 	private function createConvey(&$obj,$filename){
 		$filename=str_replace("\\", "/", $filename);
 		$sql="insert into convey_list(title,configfile) values('".$obj->title."','".$filename."')";
-		iQuery($sql);
 		return iQuery($sql);
 	}
 

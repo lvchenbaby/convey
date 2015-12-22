@@ -125,7 +125,7 @@
    
   </tr>
   </table>
-  <div class="tijiao"><a href="javascript:void(0)" id="submit-btn"><img src="/view/index/images/tijiao.jpg" /></a></div>
+  <div class="tijiao"><a href="javascript:void(0)" id="submit-btn"><img class="icon-submit-btn" src="/view/index/images/tijiao.jpg" /></a></div>
 
 </div>
 
